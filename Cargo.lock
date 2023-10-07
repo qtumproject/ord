@@ -481,6 +481,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d86b93f97252c47b41663388e6d155714a9d0c398b99f1005cbc5f978b29f445"
 
 [[package]]
+name = "bech32"
+version = "0.10.0-alpha-qtum"
+
+[[package]]
 name = "bip39"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -493,17 +497,42 @@ dependencies = [
 
 [[package]]
 name = "bitcoin"
-version = "0.30.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e99ff7289b20a7385f66a0feda78af2fc119d28fb56aea8886a9cd0a4abdd75"
+version = "0.30.0-qtum"
 dependencies = [
- "bech32",
- "bitcoin-private",
- "bitcoin_hashes 0.12.0",
+ "bech32 0.10.0-alpha-qtum",
+ "bitcoin-internals",
+ "bitcoin_hashes 0.13.0",
+ "hex-conservative",
  "hex_lit",
  "secp256k1",
  "serde",
 ]
+
+[[package]]
+name = "bitcoin"
+version = "0.30.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4e99ff7289b20a7385f66a0feda78af2fc119d28fb56aea8886a9cd0a4abdd75"
+dependencies = [
+ "bech32 0.9.1",
+ "bitcoin-private 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bitcoin_hashes 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hex_lit",
+ "secp256k1",
+]
+
+[[package]]
+name = "bitcoin-internals"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9425c3bf7089c983facbae04de54513cce73b41c7f9ff8c845b54e7bc64ebbfb"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "bitcoin-private"
+version = "0.1.0"
 
 [[package]]
 name = "bitcoin-private"
@@ -520,10 +549,27 @@ checksum = "90064b8dee6815a6470d60bad07bbbaee885c0e12d04177138fa3291a01b7bc4"
 [[package]]
 name = "bitcoin_hashes"
 version = "0.12.0"
+dependencies = [
+ "bitcoin-private 0.1.0",
+]
+
+[[package]]
+name = "bitcoin_hashes"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d7066118b13d4b20b23645932dfb3a81ce7e29f95726c2036fa33cd7b092501"
 dependencies = [
- "bitcoin-private",
+ "bitcoin-private 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "bitcoin_hashes"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1930a4dabfebb8d7d9992db18ebe3ae2876f0a305fab206fd168df931ede293b"
+dependencies = [
+ "bitcoin-internals",
+ "hex-conservative",
  "serde",
 ]
 
@@ -1418,6 +1464,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
+name = "hex-conservative"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "30ed443af458ccb6d81c1e7e661545f94d3176752fb1df2f543b902a1e0f51e2"
+
+[[package]]
 name = "hex_lit"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1835,8 +1887,8 @@ version = "10.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1eb102b66b2127a872dbcc73095b7b47aeb9d92f7b03c2b2298253ffc82c7594"
 dependencies = [
- "bitcoin",
- "bitcoin-private",
+ "bitcoin 0.30.1",
+ "bitcoin-private 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -2090,9 +2142,11 @@ dependencies = [
  "axum",
  "axum-server",
  "base64 0.21.3",
- "bech32",
+ "bech32 0.9.1",
  "bip39",
- "bitcoin",
+ "bitcoin 0.30.0-qtum",
+ "bitcoin-private 0.1.0",
+ "bitcoin_hashes 0.12.0",
  "boilerplate",
  "chrono",
  "clap",
@@ -2138,11 +2192,10 @@ dependencies = [
 
 [[package]]
 name = "ord-bitcoincore-rpc"
-version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d57a4297d466506cde088e020b33819f9a496d50272b14d7890e6fde5595a3e"
+version = "0.17.1-qtum"
 dependencies = [
- "bitcoin-private",
+ "bitcoin-private 0.1.0",
+ "bitcoin_hashes 0.12.0",
  "jsonrpc",
  "log",
  "ord-bitcoincore-rpc-json",
@@ -2152,12 +2205,11 @@ dependencies = [
 
 [[package]]
 name = "ord-bitcoincore-rpc-json"
-version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5bb35088f918c775bc27fa79e372d034892b216fb7900aeedd6e06654879ad33"
+version = "0.17.1-qtum"
 dependencies = [
- "bitcoin",
- "bitcoin-private",
+ "bitcoin 0.30.0-qtum",
+ "bitcoin-private 0.1.0",
+ "bitcoin_hashes 0.12.0",
  "serde",
  "serde_json",
 ]
@@ -2789,7 +2841,7 @@ version = "0.27.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "25996b82292a7a57ed3508f052cfff8640d38d32018784acd714758b43da9c8f"
 dependencies = [
- "bitcoin_hashes 0.12.0",
+ "bitcoin_hashes 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.8.5",
  "secp256k1-sys",
  "serde",
@@ -3111,7 +3163,7 @@ dependencies = [
 name = "test-bitcoincore-rpc"
 version = "0.0.1"
 dependencies = [
- "bitcoin",
+ "bitcoin 0.30.0-qtum",
  "hex",
  "jsonrpc-core",
  "jsonrpc-derive",
