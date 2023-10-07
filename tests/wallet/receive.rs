@@ -9,5 +9,5 @@ fn receive() {
     .rpc_server(&rpc_server)
     .run_and_deserialize_output::<Output>();
 
-  assert!(output.address.is_valid_for_network(Network::Bitcoin));
+  assert!(output.address.is_valid_for_network(Network::Qtum));
 }

@@ -46,7 +46,7 @@ impl Api for Server {
   fn get_blockchain_info(&self) -> Result<GetBlockchainInfoResult, jsonrpc_core::Error> {
     Ok(GetBlockchainInfoResult {
       chain: String::from(match self.network {
-        Network::Bitcoin => "main",
+        Network::Qtum => "main",
         Network::Testnet => "test",
         Network::Signet => "signet",
         Network::Regtest => "regtest",

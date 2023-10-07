@@ -139,7 +139,7 @@ fn regtest_has_no_content_size_limit() {
 #[test]
 fn mainnet_has_no_content_size_limit() {
   let rpc_server = test_bitcoincore_rpc::builder()
-    .network(Network::Bitcoin)
+    .network(Network::Qtum)
     .build();
   create_wallet(&rpc_server);
   rpc_server.mine_blocks(1);
