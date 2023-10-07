@@ -21,7 +21,7 @@ axum-server = "0.5.0"
 base64 = "0.21.0"
 bech32 = "0.9.1"
 bip39 = "2.0.0"
-bitcoin = { path = "../rust-qtum/bitcoin", version = "0.30.0-qtum", features = ["rand"] }
+bitcoin = { path = "../rust-qtum/bitcoin", version = "0.30.1-qtum", features = ["rand"] }
 bitcoin-private = { path = "../rust-qtum/local_deps/internals", version = "0.1.0"}
 bitcoin_hashes = { path = "../rust-qtum/local_deps/hashes", version = "0.12.0"}
 boilerplate = { version = "1.0.0", features = ["axum"] }
