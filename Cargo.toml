@@ -39,7 +39,7 @@ lazy_static = "1.4.0"
 log = "0.4.14"
 mime = "0.3.16"
 mime_guess = "2.0.4"
-miniscript = {path = "../rust-miniscript", version = "10.0.0"}
+miniscript = {path = "../rust-miniscript", version = "10.0.0-qtum"}
 mp4 = "0.14.0"
 ord-bitcoincore-rpc = {path = "../rust-qtumcore-rpc/client", version = "0.17.1-qtum"}
 redb = "1.0.5"
