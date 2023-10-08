@@ -15,7 +15,6 @@ debug = 1
 
 [dependencies]
 arbitrary = { version = "1", features = ["derive"] }
-# bitcoin = { version = "0.30.0", features = ["rand"] }
 bitcoin = { path = "../../rust-qtum/bitcoin", version = "0.30.0-qtum", features = ["rand"] }
 libfuzzer-sys = "0.4"
 ord = { path = ".." }
