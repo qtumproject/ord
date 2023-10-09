@@ -1846,7 +1846,7 @@ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
 
 [[package]]
 name = "miniscript"
-version = "10.0.0"
+version = "10.0.0-qtum"
 dependencies = [
  "bitcoin",
  "bitcoin-private 0.1.0",
@@ -2095,61 +2095,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 
 [[package]]
-name = "ord"
-version = "0.9.0"
-dependencies = [
- "anyhow",
- "async-trait",
- "axum",
- "axum-server",
- "base64 0.21.4",
- "bech32",
- "bip39",
- "bitcoin",
- "boilerplate",
- "chrono",
- "clap",
- "ctrlc",
- "derive_more",
- "dirs",
- "env_logger",
- "executable-path",
- "futures",
- "hex",
- "html-escaper",
- "http",
- "hyper",
- "indicatif",
- "lazy_static",
- "log",
- "mime",
- "mime_guess",
- "miniscript",
- "mp4",
- "ord-bitcoincore-rpc",
- "pretty_assertions",
- "pulldown-cmark",
- "redb",
- "regex",
- "reqwest",
- "rss",
- "rust-embed",
- "rustls",
- "rustls-acme",
- "serde",
- "serde_json",
- "serde_yaml",
- "sysinfo",
- "tempfile",
- "test-bitcoincore-rpc",
- "tokio",
- "tokio-stream",
- "tokio-util 0.7.9",
- "tower-http",
- "unindent",
-]
-
-[[package]]
 name = "ord-bitcoincore-rpc"
 version = "0.17.1-qtum"
 dependencies = [
@@ -2345,6 +2290,61 @@ checksum = "076c73d0bc438f7a4ef6fdd0c3bb4732149136abd952b110ac93e4edb13a6ba5"
 dependencies = [
  "once_cell",
  "target-lexicon",
+]
+
+[[package]]
+name = "qord"
+version = "0.9.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "axum",
+ "axum-server",
+ "base64 0.21.4",
+ "bech32",
+ "bip39",
+ "bitcoin",
+ "boilerplate",
+ "chrono",
+ "clap",
+ "ctrlc",
+ "derive_more",
+ "dirs",
+ "env_logger",
+ "executable-path",
+ "futures",
+ "hex",
+ "html-escaper",
+ "http",
+ "hyper",
+ "indicatif",
+ "lazy_static",
+ "log",
+ "mime",
+ "mime_guess",
+ "miniscript",
+ "mp4",
+ "ord-bitcoincore-rpc",
+ "pretty_assertions",
+ "pulldown-cmark",
+ "redb",
+ "regex",
+ "reqwest",
+ "rss",
+ "rust-embed",
+ "rustls",
+ "rustls-acme",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sysinfo",
+ "tempfile",
+ "test-bitcoincore-rpc",
+ "tokio",
+ "tokio-stream",
+ "tokio-util 0.7.9",
+ "tower-http",
+ "unindent",
 ]
 
 [[package]]

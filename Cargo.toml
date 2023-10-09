@@ -1,12 +1,12 @@
 [package]
-name = "ord"
-description = "◉ Ordinal wallet and block explorer"
+name = "qord"
+description = "◉ Ordinal wallet and block explorer for Qtum"
 version = "0.9.0"
 license = "CC0-1.0"
 edition = "2021"
 autotests = false
-homepage = "https://github.com/ordinals/ord"
-repository = "https://github.com/ordinals/ord"
+homepage = "https://github.com/qtumproject/ord"
+repository = "https://github.com/qtumproject/ord"
 autobins = false
 rust-version = "1.67"
 
