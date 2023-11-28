@@ -53,7 +53,7 @@ export ORD_BITCOIN_RPC_USER=qtum
 export ORD_BITCOIN_RPC_PASS=qtum
 export CHAIN=regtest
 
-alias qord='RUST_LOG=debug <path to cloned repos>/ord/target/release/ord --regtest --bitcoin-rpc-user qtum --bitcoin-rpc-pass qtum  --rpc-url 127.0.0.1:13777'
+alias qord='RUST_LOG=debug <path to cloned repos>/ord/target/release/qord --regtest --bitcoin-rpc-user qtum --bitcoin-rpc-pass qtum  --rpc-url 127.0.0.1:13777'
 ```
 
 ### Creating a `qord` wallet
