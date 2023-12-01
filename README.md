@@ -5,6 +5,8 @@
 
 **WORK IN PROGRESS.**
 
+See [Qtum Developer Notes](qtum-dev-notes.md) for a description on how to setup the development environment for it.
+
 See below for the original `ord` README.
 
 ---
