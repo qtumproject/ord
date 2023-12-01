@@ -1,3 +1,15 @@
+`qord`
+=====
+
+`qord` is an index, block explorer, and command-line wallet for Qtum. This repository was forked from [ord](https://github.com/ordinals/ord).
+
+**WORK IN PROGRESS.**
+
+See below for the original `ord` README.
+
+---
+
+
 `ord`
 =====
 
