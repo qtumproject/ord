@@ -1608,8 +1608,8 @@ mod tests {
   #[test]
   fn search_for_blockhash_returns_block() {
     TestServer::new().assert_redirect(
-      "/search/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
-      "/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+      "/search/000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c",
+      "/block/000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c",
     );
   }
 
@@ -1701,7 +1701,7 @@ mod tests {
     assert_eq!(response.status(), StatusCode::OK);
     assert_eq!(
       response.text().unwrap(),
-      "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+      "000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c"
     );
   }
 
@@ -1714,7 +1714,7 @@ mod tests {
     assert_eq!(response.status(), StatusCode::OK);
     assert_eq!(
       response.text().unwrap(),
-      "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+      "000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c"
     );
   }
 
@@ -1725,7 +1725,7 @@ mod tests {
     let response = test_server.get("/blocktime");
 
     assert_eq!(response.status(), StatusCode::OK);
-    assert_eq!(response.text().unwrap(), "1231006505");
+    assert_eq!(response.text().unwrap(), "1504695029");
   }
 
   #[test]

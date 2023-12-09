@@ -70,14 +70,14 @@ pub(crate) fn satpoint(n: u64, offset: u64) -> SatPoint {
 }
 
 pub(crate) fn address() -> Address {
-  "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4"
+  "qc1p6p8u0j2z4p339suwg5dygkfxjxft5nkuxrmh23s39rvavlwsmhpqx4fc0w"
     .parse::<Address<NetworkUnchecked>>()
     .unwrap()
     .assume_checked()
 }
 
 pub(crate) fn recipient() -> Address {
-  "tb1q6en7qjxgw4ev8xwx94pzdry6a6ky7wlfeqzunz"
+  "tq1p354czyf0l5rvxujpv74k3wpkyxslvsghqyem3gmcna7j0wpygfuq2clvq6"
     .parse::<Address<NetworkUnchecked>>()
     .unwrap()
     .assume_checked()
@@ -85,10 +85,10 @@ pub(crate) fn recipient() -> Address {
 
 pub(crate) fn change(n: u64) -> Address {
   match n {
-    0 => "tb1qjsv26lap3ffssj6hfy8mzn0lg5vte6a42j75ww",
-    1 => "tb1qakxxzv9n7706kc3xdcycrtfv8cqv62hnwexc0l",
-    2 => "tb1qxz9yk0td0yye009gt6ayn7jthz5p07a75luryg",
-    3 => "tb1qe62s57n77pfhlw2vtqlhm87dwj75l6fguavjjq",
+    0 => "tq1pecjdvnwzj8tey2jqes8adn2cn7pvsjdntkfzquy4rncj0pf3cg6qeknkdd",
+    1 => "tq1ppj5qwekc6s0ln9a2e47l3mk82htv7dylqegvzwrjgqs8509p7xjsg24ek0",
+    2 => "tq1pll5war0scsf697fd6sev39dm9dwg74vphvu7etczpxsmhm35q49s0mqm0q",
+    3 => "tq1plq3guwmrw970v60r3harz4c9mv9z8u0xgr2e8cp8ffa8fmr3pr2qs3ssk8",
     _ => panic!(),
   }
   .parse::<Address<NetworkUnchecked>>()

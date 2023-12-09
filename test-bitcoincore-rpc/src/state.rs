@@ -92,6 +92,10 @@ impl State {
         time: self.blocks.len().try_into().unwrap(),
         bits: CompactTarget::from_consensus(0),
         nonce: self.nonce,
+        hash_state_root: BlockHash::all_zeros(),
+        hash_utxo_root: BlockHash::all_zeros(),
+        prevout_stake: OutPoint::null(),
+        signature: vec![],
       },
       txdata: std::iter::once(coinbase)
         .chain(self.mempool.drain(0..))
