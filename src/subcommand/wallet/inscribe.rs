@@ -530,7 +530,7 @@ mod tests {
 
   #[test]
   fn reveal_transaction_pays_fee() {
-    let utxos = vec![(outpoint(1), Amount::from_sat(20000))];
+    let utxos = vec![(outpoint(1), Amount::from_sat(80000))];
     let inscription = inscription("text/plain", "ord");
     let commit_address = change(0);
     let reveal_address = recipient();
@@ -558,13 +558,13 @@ mod tests {
 
     assert_eq!(
       reveal_tx.output[0].value,
-      20000 - fee.to_sat() - (20000 - commit_tx.output[0].value),
+      80000 - fee.to_sat() - (80000 - commit_tx.output[0].value),
     );
   }
 
   #[test]
   fn inscribe_tansactions_opt_in_to_rbf() {
-    let utxos = vec![(outpoint(1), Amount::from_sat(20000))];
+    let utxos = vec![(outpoint(1), Amount::from_sat(80000))];
     let inscription = inscription("text/plain", "ord");
     let commit_address = change(0);
     let reveal_address = recipient();
@@ -635,8 +635,8 @@ mod tests {
   #[test]
   fn inscribe_with_no_satpoint_and_enough_cardinal_utxos() {
     let utxos = vec![
-      (outpoint(1), Amount::from_sat(20_000)),
-      (outpoint(2), Amount::from_sat(20_000)),
+      (outpoint(1), Amount::from_sat(80_000)),
+      (outpoint(2), Amount::from_sat(80_000)),
     ];
     let mut inscriptions = BTreeMap::new();
     inscriptions.insert(
@@ -673,8 +673,8 @@ mod tests {
   #[test]
   fn inscribe_with_custom_fee_rate() {
     let utxos = vec![
-      (outpoint(1), Amount::from_sat(10_000)),
-      (outpoint(2), Amount::from_sat(20_000)),
+      (outpoint(1), Amount::from_sat(40_000)),
+      (outpoint(2), Amount::from_sat(80_000)),
     ];
     let mut inscriptions = BTreeMap::new();
     inscriptions.insert(
@@ -721,7 +721,7 @@ mod tests {
       .reduce(|acc, i| acc + i)
       .unwrap();
 
-    assert_eq!(reveal_value, 20_000 - fee);
+    assert_eq!(reveal_value, 80_000 - fee);
 
     let fee = FeeRate::try_from(fee_rate)
       .unwrap()
@@ -730,15 +730,15 @@ mod tests {
 
     assert_eq!(
       reveal_tx.output[0].value,
-      20_000 - fee - (20_000 - commit_tx.output[0].value),
+      80_000 - fee - (80_000 - commit_tx.output[0].value),
     );
   }
 
   #[test]
   fn inscribe_with_parent() {
     let utxos = vec![
-      (outpoint(1), Amount::from_sat(10_000)),
-      (outpoint(2), Amount::from_sat(20_000)),
+      (outpoint(1), Amount::from_sat(40_000)),
+      (outpoint(2), Amount::from_sat(80_000)),
     ];
 
     let mut inscriptions = BTreeMap::new();
@@ -793,7 +793,7 @@ mod tests {
       .reduce(|acc, i| acc + i)
       .unwrap();
 
-    assert_eq!(reveal_value, 20_000 - fee);
+    assert_eq!(reveal_value, 80_000 - fee);
 
     let sig_vbytes = 16;
     let fee = FeeRate::try_from(fee_rate)
@@ -820,8 +820,8 @@ mod tests {
   #[test]
   fn inscribe_with_commit_fee_rate() {
     let utxos = vec![
-      (outpoint(1), Amount::from_sat(10_000)),
-      (outpoint(2), Amount::from_sat(20_000)),
+      (outpoint(1), Amount::from_sat(40_000)),
+      (outpoint(2), Amount::from_sat(80_000)),
     ];
     let mut inscriptions = BTreeMap::new();
     inscriptions.insert(
@@ -869,7 +869,7 @@ mod tests {
       .reduce(|acc, i| acc + i)
       .unwrap();
 
-    assert_eq!(reveal_value, 20_000 - fee);
+    assert_eq!(reveal_value, 80_000 - fee);
 
     let fee = FeeRate::try_from(fee_rate)
       .unwrap()
@@ -878,7 +878,7 @@ mod tests {
 
     assert_eq!(
       reveal_tx.output[0].value,
-      20_000 - fee - (20_000 - commit_tx.output[0].value),
+      80_000 - fee - (80_000 - commit_tx.output[0].value),
     );
   }
 
@@ -910,7 +910,7 @@ mod tests {
     .to_string();
 
     assert!(
-      error.contains(&format!("reveal transaction weight greater than {MAX_STANDARD_TX_WEIGHT} (MAX_STANDARD_TX_WEIGHT): 402799")),
+      error.contains(&format!("reveal transaction weight greater than {MAX_STANDARD_TX_WEIGHT} (MAX_STANDARD_TX_WEIGHT): 402847")),
       "{}",
       error
     );
