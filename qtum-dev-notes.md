@@ -105,8 +105,8 @@ docker exec -it qtum_regtest bash
 # alias the qtum cli
 root@875eeb0757a8:/# alias q='/usr/local/bin/qtum-cli  -rpcuser=qtum -rpcpassword=qtum -regtest -rpcport=13777 --rpcconnect=127.0.0.1'
 
-# generate 101 blocks to fund the qord wallet
-root@875eeb0757a8:/#  q generatetoaddress 101  qcrt1pn5gu79mlxaswessrhw3n5ldd70x0g6r2z0z4l5eqaxdgw9gvfn5s97fevr
+# generate 2001 blocks to fund the qord wallet
+root@875eeb0757a8:/#  q generatetoaddress 2001  qcrt1pn5gu79mlxaswessrhw3n5ldd70x0g6r2z0z4l5eqaxdgw9gvfn5s97fevr
 ```
 
 ### Create a file to inscribe into a satoshi
@@ -114,14 +114,14 @@ root@875eeb0757a8:/#  q generatetoaddress 101  qcrt1pn5gu79mlxaswessrhw3n5ldd70x
 
 
 ```bash
-echo "Hello qtum!" > /tmp/hello.txt
+echo "Hello Qtum ordinal!" > /tmp/hello.txt
 ```
 
 ### Inscribing the file into a satoshi
 
 ```bash
 ### generate the transactions to inscribe the file into a satoshi
-qord wallet inscribe --fee-rate 1 /tmp/hello.txt 
+qord wallet inscribe --fee-rate 61601 /tmp/hello.txt 
 ```
 Back on the `regtest` terminal, use qtum-cli again to mine the transactions:
 
@@ -137,5 +137,29 @@ qord server
 
 ### Open the browser to visualize the inscribed satoshi
 
-Navigate to http://localhost:8000/ to see the inscribed satoshi on block 102.
+Navigate to http://localhost:8000/ to see the inscribed satoshi on block 2002:
+
+![Alt text](image.png)
+
+### Restarting the `qord` server
+
+If you follow the steps above to make an inscription, you might get errors related to missing transaction outputs or indexing errors.
+
+The quickest way to fix this is to delete the database and reindex the blockchain.
+
+By default, the database is stored in the following locations depending on your operating system:
+
+|Platform | Value                                            | Example                                      |
+| ------- | ------------------------------------------------ | -------------------------------------------- |
+| Linux   | `$XDG_DATA_HOME`/ord or `$HOME`/.local/share/ord | /home/alice/.local/share/ord                 |
+| macOS   | `$HOME`/Library/Application Support/ord          | /Users/Alice/Library/Application Support/ord |
+| Windows | `{FOLDERID_RoamingAppData}`\ord                  | C:\Users\Alice\AppData\Roaming\ord           |
+
+So to delete the database and reindex on MacOS you would have to run the following
+commands in the terminal:
+
+```bash
+rm ~/Library/Application Support/ord/index.redb
+ord index run
+```
 
