@@ -10,8 +10,8 @@ use {
   super::*,
   crate::subcommand::find::FindRangeOutput,
   crate::wallet::Wallet,
-  bitcoin::block::Header,
-  bitcoincore_rpc::{json::GetBlockHeaderResult, Client},
+  qtum::block::Header,
+  qtumcore_rpc::{json::GetBlockHeaderResult, Client},
   chrono::SubsecRound,
   indicatif::{ProgressBar, ProgressStyle},
   log::log_enabled,
@@ -116,15 +116,15 @@ trait BitcoinCoreRpcResultExt<T> {
   fn into_option(self) -> Result<Option<T>>;
 }
 
-impl<T> BitcoinCoreRpcResultExt<T> for Result<T, bitcoincore_rpc::Error> {
+impl<T> BitcoinCoreRpcResultExt<T> for Result<T, qtumcore_rpc::Error> {
   fn into_option(self) -> Result<Option<T>> {
     match self {
       Ok(ok) => Ok(Some(ok)),
-      Err(bitcoincore_rpc::Error::JsonRpc(bitcoincore_rpc::jsonrpc::error::Error::Rpc(
-        bitcoincore_rpc::jsonrpc::error::RpcError { code: -8, .. },
+      Err(qtumcore_rpc::Error::JsonRpc(qtumcore_rpc::jsonrpc::error::Error::Rpc(
+        qtumcore_rpc::jsonrpc::error::RpcError { code: -8, .. },
       ))) => Ok(None),
-      Err(bitcoincore_rpc::Error::JsonRpc(bitcoincore_rpc::jsonrpc::error::Error::Rpc(
-        bitcoincore_rpc::jsonrpc::error::RpcError { message, .. },
+      Err(qtumcore_rpc::Error::JsonRpc(qtumcore_rpc::jsonrpc::error::Error::Rpc(
+        qtumcore_rpc::jsonrpc::error::RpcError { message, .. },
       )))
         if message.ends_with("not found") =>
       {
@@ -300,7 +300,7 @@ impl Index {
 
     #[derive(Deserialize)]
     pub(crate) struct JsonOutPoint {
-      txid: bitcoin::Txid,
+      txid: qtum::Txid,
       vout: u32,
     }
 
@@ -1279,7 +1279,7 @@ impl Index {
 mod tests {
   use {
     super::*,
-    bitcoin::secp256k1::rand::{self, RngCore},
+    qtum::secp256k1::rand::{self, RngCore},
   };
 
   struct ContextBuilder {

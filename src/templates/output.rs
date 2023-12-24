@@ -54,7 +54,7 @@ impl PageContent for OutputHtml {
 mod tests {
   use {
     super::*,
-    bitcoin::{blockdata::script, PubkeyHash},
+    qtum::{blockdata::script, PubkeyHash},
   };
 
   #[test]

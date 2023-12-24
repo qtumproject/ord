@@ -2,7 +2,7 @@
 
 use {
   self::{command_builder::CommandBuilder, expected::Expected, test_server::TestServer},
-  bitcoin::{
+  qtum::{
     address::{Address, NetworkUnchecked},
     blockdata::constants::COIN_VALUE,
     Network, OutPoint,
@@ -64,22 +64,22 @@ fn inscribe(rpc_server: &test_bitcoincore_rpc::Handle) -> Inscribe {
   output
 }
 
-fn envelope(payload: &[&[u8]]) -> bitcoin::Witness {
-  let mut builder = bitcoin::script::Builder::new()
-    .push_opcode(bitcoin::opcodes::OP_FALSE)
-    .push_opcode(bitcoin::opcodes::all::OP_IF);
+fn envelope(payload: &[&[u8]]) -> qtum::Witness {
+  let mut builder = qtum::script::Builder::new()
+    .push_opcode(qtum::opcodes::OP_FALSE)
+    .push_opcode(qtum::opcodes::all::OP_IF);
 
   for data in payload {
-    let mut buf = bitcoin::script::PushBytesBuf::new();
+    let mut buf = qtum::script::PushBytesBuf::new();
     buf.extend_from_slice(data).unwrap();
     builder = builder.push_slice(buf);
   }
 
   let script = builder
-    .push_opcode(bitcoin::opcodes::all::OP_ENDIF)
+    .push_opcode(qtum::opcodes::all::OP_ENDIF)
     .into_script();
 
-  bitcoin::Witness::from_slice(&[script.into_bytes(), Vec::new()])
+  qtum::Witness::from_slice(&[script.into_bytes(), Vec::new()])
 }
 
 fn create_wallet(rpc_server: &test_bitcoincore_rpc::Handle) {

@@ -5,7 +5,7 @@
 
 **WORK IN PROGRESS.**
 
-See [Qtum Developer Notes](qtum-dev-notes.md) for a description on how to setup the development environment for it.
+See [Qtum Developer Notes](qtum-dev-notes.md) for a quick start guide to create and mine an inscription using `qord` and qtum regtest.
 
 See below for the original `ord` README.
 

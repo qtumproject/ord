@@ -1,7 +1,7 @@
 pub(crate) use {
   super::*,
   crate::inscription::TransactionInscription,
-  bitcoin::{
+  qtum::{
     blockdata::{opcodes, script, script::PushBytesBuf},
     ScriptBuf, Witness,
   },

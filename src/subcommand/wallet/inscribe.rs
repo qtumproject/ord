@@ -1,7 +1,7 @@
 use {
   super::*,
   crate::{subcommand::wallet::transaction_builder::Target, wallet::Wallet},
-  bitcoin::{
+  qtum::{
     blockdata::{opcodes, script},
     key::PrivateKey,
     key::{TapTweak, TweakedKeyPair, TweakedPublicKey, UntweakedKeyPair},
@@ -13,8 +13,8 @@ use {
     taproot::{ControlBlock, LeafVersion, TapLeafHash, TaprootBuilder},
     ScriptBuf, Witness,
   },
-  bitcoincore_rpc::bitcoincore_rpc_json::{ImportDescriptors, SignRawTransactionInput, Timestamp},
-  bitcoincore_rpc::Client,
+  qtumcore_rpc::qtumcore_rpc_json::{ImportDescriptors, SignRawTransactionInput, Timestamp},
+  qtumcore_rpc::Client,
   std::collections::BTreeSet,
 };
 
@@ -178,7 +178,7 @@ impl Inscribe {
         )?
         .hex
     } else {
-      bitcoin::consensus::encode::serialize(&reveal_tx)
+      qtum::consensus::encode::serialize(&reveal_tx)
     };
 
     if !self.no_backup {
@@ -419,7 +419,7 @@ impl Inscribe {
 
     let reveal_weight = reveal_tx.weight();
 
-    if !no_limit && reveal_weight > bitcoin::Weight::from_wu(MAX_STANDARD_TX_WEIGHT.into()) {
+    if !no_limit && reveal_weight > qtum::Weight::from_wu(MAX_STANDARD_TX_WEIGHT.into()) {
       bail!(
         "reveal transaction weight greater than {MAX_STANDARD_TX_WEIGHT} (MAX_STANDARD_TX_WEIGHT): {reveal_weight}"
       );
@@ -696,7 +696,7 @@ mod tests {
       None,
       inscription,
       inscriptions,
-      bitcoin::Network::Signet,
+      qtum::Network::Signet,
       utxos.into_iter().collect(),
       [commit_address, change(1)],
       reveal_address,
@@ -768,7 +768,7 @@ mod tests {
       Some(parent_info.clone()),
       child_inscription,
       inscriptions,
-      bitcoin::Network::Signet,
+      qtum::Network::Signet,
       utxos.into_iter().collect(),
       [commit_address, change(2)],
       reveal_address,
@@ -844,7 +844,7 @@ mod tests {
       None,
       inscription,
       inscriptions,
-      bitcoin::Network::Signet,
+      qtum::Network::Signet,
       utxos.into_iter().collect(),
       [commit_address, change(1)],
       reveal_address,

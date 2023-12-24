@@ -31,7 +31,7 @@ use {
   },
   anyhow::{anyhow, bail, Context, Error},
   bip39::Mnemonic,
-  bitcoin::{
+  qtum::{
     address::{Address, NetworkUnchecked},
     blockdata::constants::COIN_VALUE,
     consensus::{self, Decodable, Encodable},
@@ -39,7 +39,7 @@ use {
     hashes::Hash,
     Amount, Block, Network, OutPoint, Script, ScriptBuf, Sequence, Transaction, TxIn, TxOut, Txid,
   },
-  bitcoincore_rpc::{Client, RpcApi},
+  qtumcore_rpc::{Client, RpcApi},
   chain::Chain,
   chrono::{DateTime, TimeZone, Utc},
   clap::{ArgGroup, Parser},
@@ -124,9 +124,9 @@ mod wallet;
 
 type Result<T = (), E = Error> = std::result::Result<T, E>;
 
-const DIFFCHANGE_INTERVAL: u64 = bitcoin::blockdata::constants::DIFFCHANGE_INTERVAL as u64;
+const DIFFCHANGE_INTERVAL: u64 = qtum::blockdata::constants::DIFFCHANGE_INTERVAL as u64;
 const SUBSIDY_HALVING_INTERVAL: u64 =
-  bitcoin::blockdata::constants::SUBSIDY_HALVING_INTERVAL as u64;
+  qtum::blockdata::constants::SUBSIDY_HALVING_INTERVAL as u64;
 const CYCLE_EPOCHS: u64 = 6;
 
 static SHUTTING_DOWN: AtomicBool = AtomicBool::new(false);

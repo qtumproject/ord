@@ -4,30 +4,15 @@ This document provides a brief overview of the ordinals wallet for Qtum (`qord`)
 ## What is `qord`?
 `qord` is a wallet for Qtum that is designed to be used to inscribe sat in the Qtum blockchain. It is a fork of the bitcoin's [ordinals wallet](https://github.com/ordinals/ord) that has been modified to work with Qtum.
 
-
-## Using the development environment
-
-### Clone the repositories
-
-Four repositories should be cloned into the same directory:
-
-```bash
-# clone the qord repository
-git clone https://github.com/qtumproject/ord.git
-
-# clone the rust-qtum repository
-git clone https://github.com/qtumproject/rust-qtum.git
-
-# clone the rust-qtumcore-rpc repository
-git clone https://github.com/qtumproject/rust-qtumcore-rpc.git
-
-# clone the rust-miniscript-qtum repository
-git clone https://github.com/qtumproject/rust-miniscript-qtum.git
-```
-The above will clone all the required dependencies linked locally to the `ord` repository.
-
+## Quick start guide
 
 ### Building `qord`
+
+Clone the qord repository
+  
+  ```bash
+git clone https://github.com/qtumproject/ord.git
+```
 
 `qord` can be built using the following command:
 

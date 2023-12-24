@@ -1,7 +1,7 @@
 use {
   super::*,
   crate::command_builder::ToArgs,
-  bitcoincore_rpc::{Auth, Client, RpcApi},
+  qtumcore_rpc::{Auth, Client, RpcApi},
   reqwest::blocking::Response,
 };
 

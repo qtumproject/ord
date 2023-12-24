@@ -33,7 +33,7 @@
 
 use {
   super::*,
-  bitcoin::{
+  qtum::{
     blockdata::{locktime::absolute::LockTime, witness::Witness},
     Amount, ScriptBuf,
   },

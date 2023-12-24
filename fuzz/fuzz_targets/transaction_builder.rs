@@ -2,7 +2,7 @@
 
 use {
   arbitrary::Arbitrary,
-  bitcoin::{
+  qtum::{
     address::{Address, NetworkUnchecked},
     Amount, OutPoint,
   },

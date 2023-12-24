@@ -1,4 +1,4 @@
-use {super::*, bitcoincore_rpc::Auth};
+use {super::*, qtumcore_rpc::Auth};
 
 #[derive(Clone, Default, Debug, Parser)]
 #[command(group(
@@ -274,7 +274,7 @@ impl Options {
 
 #[cfg(test)]
 mod tests {
-  use {super::*, bitcoin::Network, std::path::Path};
+  use {super::*, qtum::Network, std::path::Path};
 
   #[test]
   fn rpc_url_overrides_network() {

@@ -1,16 +1,16 @@
 use {
   super::*,
-  bitcoin::secp256k1::{
+  qtum::secp256k1::{
     rand::{self, RngCore},
     All, Secp256k1,
   },
-  bitcoin::{
+  qtum::{
     bip32::{ChildNumber, DerivationPath, ExtendedPrivKey, Fingerprint},
     Network,
   },
-  bitcoincore_rpc::bitcoincore_rpc_json::{ImportDescriptors, Timestamp},
+  qtumcore_rpc::qtumcore_rpc_json::{ImportDescriptors, Timestamp},
   fee_rate::FeeRate,
-  miniscript::descriptor::{Descriptor, DescriptorSecretKey, DescriptorXKey, Wildcard},
+  miniscript_qtum::descriptor::{Descriptor, DescriptorSecretKey, DescriptorXKey, Wildcard},
   transaction_builder::TransactionBuilder,
 };
 

@@ -1173,7 +1173,7 @@ mod tests {
     fn new_with_regtest() -> Self {
       Self::new_server(
         test_bitcoincore_rpc::builder()
-          .network(bitcoin::network::constants::Network::Regtest)
+          .network(qtum::network::constants::Network::Regtest)
           .build(),
         None,
         &["--chain", "regtest"],
@@ -1184,7 +1184,7 @@ mod tests {
     fn new_with_regtest_with_json_api() -> Self {
       Self::new_server(
         test_bitcoincore_rpc::builder()
-          .network(bitcoin::network::constants::Network::Regtest)
+          .network(qtum::network::constants::Network::Regtest)
           .build(),
         None,
         &["--chain", "regtest", "--enable-json-api"],
@@ -1195,7 +1195,7 @@ mod tests {
     fn new_with_regtest_with_index_sats() -> Self {
       Self::new_server(
         test_bitcoincore_rpc::builder()
-          .network(bitcoin::Network::Regtest)
+          .network(qtum::Network::Regtest)
           .build(),
         None,
         &["--chain", "regtest", "--index-sats"],
@@ -1367,7 +1367,7 @@ mod tests {
       assert_eq!(response.headers().get(header::LOCATION).unwrap(), location);
     }
 
-    fn mine_blocks(&self, n: u64) -> Vec<bitcoin::Block> {
+    fn mine_blocks(&self, n: u64) -> Vec<qtum::Block> {
       let blocks = self.bitcoin_rpc_server.mine_blocks(n);
       self.index.update().unwrap();
       blocks

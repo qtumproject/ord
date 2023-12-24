@@ -2,7 +2,7 @@ use {
   crate::Options,
   anyhow::{anyhow, Result},
   base64::Engine,
-  bitcoin::{Transaction, Txid},
+  qtum::{Transaction, Txid},
   hyper::{client::HttpConnector, Body, Client, Method, Request, Uri},
   serde::Deserialize,
   serde_json::{json, Value},
@@ -116,7 +116,7 @@ impl Fetcher {
               .map_err(|e| anyhow!("Result for batched JSON-RPC response not valid hex: {e}"))
           })
           .and_then(|hex| {
-            bitcoin::consensus::deserialize(&hex).map_err(|e| {
+            qtum::consensus::deserialize(&hex).map_err(|e| {
               anyhow!("Result for batched JSON-RPC response not valid bitcoin tx: {e}")
             })
           })

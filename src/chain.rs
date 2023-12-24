@@ -48,13 +48,13 @@ impl Chain {
   }
 
   pub(crate) fn genesis_block(self) -> Block {
-    bitcoin::blockdata::constants::genesis_block(self.network())
+    qtum::blockdata::constants::genesis_block(self.network())
   }
 
   pub(crate) fn address_from_script(
     self,
     script: &Script,
-  ) -> Result<Address, bitcoin::address::Error> {
+  ) -> Result<Address, qtum::address::Error> {
     Address::from_script(script, self.network())
   }
 

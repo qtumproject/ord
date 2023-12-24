@@ -36,7 +36,7 @@ impl PageContent for TransactionHtml {
 mod tests {
   use {
     super::*,
-    bitcoin::{blockdata::script, locktime::absolute::LockTime, TxOut},
+    qtum::{blockdata::script, locktime::absolute::LockTime, TxOut},
   };
 
   #[test]

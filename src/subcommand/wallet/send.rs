@@ -87,7 +87,7 @@ impl Send {
   fn lock_inscriptions(
     client: &Client,
     inscriptions: BTreeMap<SatPoint, InscriptionId>,
-    unspent_outputs: BTreeMap<bitcoin::OutPoint, bitcoin::Amount>,
+    unspent_outputs: BTreeMap<qtum::OutPoint, qtum::Amount>,
   ) -> Result {
     let all_inscription_outputs = inscriptions
       .keys()

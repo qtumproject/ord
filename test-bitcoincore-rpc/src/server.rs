@@ -1,10 +1,10 @@
 use {
   super::*,
-  bitcoin::{
+  qtum::{
     secp256k1::{rand, KeyPair, Secp256k1, XOnlyPublicKey},
     Witness,
   },
-  bitcoincore_rpc::RawTx,
+  qtumcore_rpc::RawTx,
 };
 
 pub(crate) struct Server {
@@ -470,7 +470,7 @@ impl Api for Server {
 
   fn get_raw_change_address(
     &self,
-    _address_type: Option<bitcoincore_rpc::json::AddressType>,
+    _address_type: Option<qtumcore_rpc::json::AddressType>,
   ) -> Result<Address, jsonrpc_core::Error> {
     let secp256k1 = Secp256k1::new();
     let key_pair = KeyPair::new(&secp256k1, &mut rand::thread_rng());
@@ -512,8 +512,8 @@ impl Api for Server {
   fn get_new_address(
     &self,
     _label: Option<String>,
-    _address_type: Option<bitcoincore_rpc::json::AddressType>,
-  ) -> Result<bitcoin::Address, jsonrpc_core::Error> {
+    _address_type: Option<qtumcore_rpc::json::AddressType>,
+  ) -> Result<qtum::Address, jsonrpc_core::Error> {
     let secp256k1 = Secp256k1::new();
     let key_pair = KeyPair::new(&secp256k1, &mut rand::thread_rng());
     let (public_key, _parity) = XOnlyPublicKey::from_keypair(&key_pair);

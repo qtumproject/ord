@@ -1,6 +1,6 @@
 use {
   super::*,
-  bitcoin::{
+  qtum::{
     blockdata::{
       opcodes,
       script::{self, Instruction, Instructions, PushBytesBuf},
@@ -647,7 +647,7 @@ mod tests {
   fn extract_from_transaction() {
     let tx = Transaction {
       version: 0,
-      lock_time: bitcoin::locktime::absolute::LockTime::ZERO,
+      lock_time: qtum::locktime::absolute::LockTime::ZERO,
       input: vec![TxIn {
         previous_output: OutPoint::null(),
         script_sig: ScriptBuf::new(),
@@ -672,7 +672,7 @@ mod tests {
   fn extract_from_second_input() {
     let tx = Transaction {
       version: 0,
-      lock_time: bitcoin::locktime::absolute::LockTime::ZERO,
+      lock_time: qtum::locktime::absolute::LockTime::ZERO,
       input: vec![
         TxIn {
           previous_output: OutPoint::null(),
@@ -706,7 +706,7 @@ mod tests {
 
     let tx = Transaction {
       version: 0,
-      lock_time: bitcoin::locktime::absolute::LockTime::ZERO,
+      lock_time: qtum::locktime::absolute::LockTime::ZERO,
       input: vec![TxIn {
         previous_output: OutPoint::null(),
         script_sig: ScriptBuf::new(),

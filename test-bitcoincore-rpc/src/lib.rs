@@ -2,7 +2,7 @@
 
 use {
   api::Api,
-  bitcoin::{
+  qtum::{
     address::{Address, NetworkUnchecked},
     amount::SignedAmount,
     block::Header,
@@ -16,7 +16,7 @@ use {
     Amount, Block, Network, OutPoint, ScriptBuf, Sequence, Transaction, TxIn, TxOut, Txid, Witness,
     Wtxid,
   },
-  bitcoincore_rpc::json::{
+  qtumcore_rpc::json::{
     Bip125Replaceable, CreateRawTransactionInput, Descriptor, EstimateMode, GetBalancesResult,
     GetBalancesResultEntry, GetBlockHeaderResult, GetBlockchainInfoResult, GetDescriptorInfoResult,
     GetNetworkInfoResult, GetRawTransactionResult, GetTransactionResult,
@@ -134,7 +134,7 @@ pub struct Sent {
 
 #[derive(Serialize, Deserialize)]
 pub struct JsonOutPoint {
-  txid: bitcoin::Txid,
+  txid: qtum::Txid,
   vout: u32,
 }
 
