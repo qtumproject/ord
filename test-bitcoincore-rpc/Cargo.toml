@@ -13,7 +13,8 @@ hex = "0.4.3"
 jsonrpc-core = "18.0.0"
 jsonrpc-derive = "18.0.0"
 jsonrpc-http-server = "18.0.0"
-ord-qtumcore-rpc = { version = "0.17.1-qtum" }
+ord-qtumcore-rpc = "0.17.1-qtum"
 reqwest = { version = "0.11.10", features = ["blocking"] }
 serde = { version = "1.0.137", features = ["derive"] }
 serde_json = { version = "1.0.81" }
+tempfile = "3.2.0"
