@@ -265,7 +265,6 @@ Release x.y.z
 - Bump version: x.y.z → x.y.z
 - Update changelog
 - Update dependencies
-- Update database schema version
 ```
 
 Translations
