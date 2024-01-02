@@ -15,7 +15,7 @@ debug = 1
 
 [dependencies]
 arbitrary = { version = "1", features = ["derive"] }
-qtum = { path = "../../rust-qtum/qtum", version = "0.30.0-qtum", features = ["rand"] }
+qtum = { version = "0.30.0-qtum", features = ["rand"] }
 libfuzzer-sys = "0.4"
 ord = { path = ".." }
 
