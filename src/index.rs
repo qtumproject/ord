@@ -1,7 +1,7 @@
 use {
   self::{
     entry::{
-      Entry, HeaderValue, InscriptionEntry, InscriptionEntryValue, InscriptionIdValue,
+      BlockHashValue, Entry, InscriptionEntry, InscriptionEntryValue, InscriptionIdValue,
       OutPointValue, RuneEntryValue, RuneIdValue, SatPointValue, SatRange, TxidValue,
     },
     reorg::*,
@@ -59,7 +59,7 @@ macro_rules! define_multimap_table {
 define_multimap_table! { SATPOINT_TO_SEQUENCE_NUMBER, &SatPointValue, u32 }
 define_multimap_table! { SAT_TO_SEQUENCE_NUMBER, u64, u32 }
 define_multimap_table! { SEQUENCE_NUMBER_TO_CHILDREN, u32, u32 }
-define_table! { HEIGHT_TO_BLOCK_HEADER, u32, &HeaderValue }
+define_table! { HEIGHT_TO_BLOCK_HASH, u32, &BlockHashValue }
 define_table! { HEIGHT_TO_LAST_SEQUENCE_NUMBER, u32, u32 }
 define_table! { HOME_INSCRIPTIONS, u32, InscriptionIdValue }
 define_table! { INSCRIPTION_ID_TO_SEQUENCE_NUMBER, InscriptionIdValue, u32 }
@@ -314,7 +314,7 @@ impl Index {
         tx.open_multimap_table(SATPOINT_TO_SEQUENCE_NUMBER)?;
         tx.open_multimap_table(SAT_TO_SEQUENCE_NUMBER)?;
         tx.open_multimap_table(SEQUENCE_NUMBER_TO_CHILDREN)?;
-        tx.open_table(HEIGHT_TO_BLOCK_HEADER)?;
+        tx.open_table(HEIGHT_TO_BLOCK_HASH)?;
         tx.open_table(HEIGHT_TO_LAST_SEQUENCE_NUMBER)?;
         tx.open_table(HOME_INSCRIPTIONS)?;
         tx.open_table(INSCRIPTION_ID_TO_SEQUENCE_NUMBER)?;
@@ -418,11 +418,11 @@ impl Index {
     };
 
     let height = rtx
-      .open_table(HEIGHT_TO_BLOCK_HEADER)?
+      .open_table(HEIGHT_TO_BLOCK_HASH)?
       .range(0..)?
       .next_back()
       .transpose()?
-      .map(|(height, _header)| height.value());
+      .map(|(height, _hash)| height.value());
 
     let next_height = height.map(|height| height + 1).unwrap_or(0);
 
@@ -524,7 +524,8 @@ impl Index {
     insert_multimap_table_info(&mut tables, &wtx, total_bytes, SATPOINT_TO_SEQUENCE_NUMBER);
     insert_multimap_table_info(&mut tables, &wtx, total_bytes, SAT_TO_SEQUENCE_NUMBER);
     insert_multimap_table_info(&mut tables, &wtx, total_bytes, SEQUENCE_NUMBER_TO_CHILDREN);
-    insert_table_info(&mut tables, &wtx, total_bytes, HEIGHT_TO_BLOCK_HEADER);
+    insert_table_info(&mut tables, &wtx, total_bytes, HEIGHT_TO_BLOCK_HASH);
+    insert_table_info(&mut tables, &wtx, total_bytes, HEIGHT_TO_BLOCK_HASH);
     insert_table_info(
       &mut tables,
       &wtx,
@@ -593,11 +594,11 @@ impl Index {
         .unwrap_or(0);
       Info {
         blocks_indexed: wtx
-          .open_table(HEIGHT_TO_BLOCK_HEADER)?
+          .open_table(HEIGHT_TO_BLOCK_HASH)?
           .range(0..)?
           .next_back()
           .and_then(|result| result.ok())
-          .map(|(height, _header)| height.value() + 1)
+          .map(|(height, _hash)| height.value() + 1)
           .unwrap_or(0),
         branch_pages: stats.branch_pages(),
         fragmented_bytes,
@@ -664,11 +665,11 @@ impl Index {
     let rtx = self.database.begin_read()?;
 
     let blocks_indexed = rtx
-      .open_table(HEIGHT_TO_BLOCK_HEADER)?
+      .open_table(HEIGHT_TO_BLOCK_HASH)?
       .range(0..)?
       .next_back()
       .and_then(|result| result.ok())
-      .map(|(height, _header)| height.value() + 1)
+      .map(|(height, _hash)| height.value() + 1)
       .unwrap_or(0);
 
     writeln!(writer, "# export at block height {}", blocks_indexed)?;
@@ -801,17 +802,13 @@ impl Index {
 
     let block_count = rtx.block_count()?;
 
-    let height_to_block_header = rtx.0.open_table(HEIGHT_TO_BLOCK_HEADER)?;
+    let height_to_block_hash = rtx.0.open_table(HEIGHT_TO_BLOCK_HASH)?;
 
     let mut blocks = Vec::with_capacity(block_count.try_into().unwrap());
 
-    for next in height_to_block_header
-      .range(0..block_count)?
-      .rev()
-      .take(take)
-    {
+    for next in height_to_block_hash.range(0..block_count)?.rev().take(take) {
       let next = next?;
-      blocks.push((next.0.value(), Header::load(*next.1.value()).block_hash()));
+      blocks.push((next.0.value(), Entry::load(*next.1.value())));
     }
 
     Ok(blocks)
@@ -1624,34 +1621,34 @@ impl Index {
   pub(crate) fn block_time(&self, height: Height) -> Result<Blocktime> {
     let height = height.n();
 
-    let rtx = self.database.begin_read()?;
+    match self.get_block_by_height(height)? {
+      Some(block) => Ok(Blocktime::confirmed(block.header.time)),
+      None => {
+        let tx = self.database.begin_read()?;
 
-    let height_to_block_header = rtx.open_table(HEIGHT_TO_BLOCK_HEADER)?;
-
-    if let Some(guard) = height_to_block_header.get(height)? {
-      return Ok(Blocktime::confirmed(Header::load(*guard.value()).time));
-    }
-
-    let current = height_to_block_header
+        let current = tx
+          .open_table(HEIGHT_TO_BLOCK_HASH)?
       .range(0..)?
       .next_back()
       .and_then(|result| result.ok())
-      .map(|(height, _header)| height)
+          .map(|(height, _hash)| height)
       .map(|x| x.value())
       .unwrap_or(0);
 
-    let expected_blocks = height
-      .checked_sub(current)
-      .with_context(|| format!("current {current} height is greater than sat height {height}"))?;
+        let expected_blocks = height.checked_sub(current).with_context(|| {
+          format!("current {current} height is greater than sat height {height}")
+        })?;
 
     Ok(Blocktime::Expected(
       Utc::now()
         .round_subsecs(0)
         .checked_add_signed(chrono::Duration::seconds(
-          10 * 60 * i64::from(expected_blocks),
+              10 * 60 * i64::try_from(expected_blocks)?,
         ))
         .ok_or_else(|| anyhow!("block timestamp out of range"))?,
     ))
+      }
+    }
   }
 
   pub(crate) fn get_inscriptions(

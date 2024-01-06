@@ -118,7 +118,7 @@ impl<'index> Updater<'_> {
         uncommitted = 0;
         wtx = self.index.begin_write()?;
         let height = wtx
-          .open_table(HEIGHT_TO_BLOCK_HEADER)?
+          .open_table(HEIGHT_TO_BLOCK_HASH)?
           .range(0..)?
           .next_back()
           .and_then(|result| result.ok())
@@ -377,7 +377,7 @@ impl<'index> Updater<'_> {
       }
     }
 
-    let mut height_to_block_header = wtx.open_table(HEIGHT_TO_BLOCK_HEADER)?;
+    let mut height_to_block_hash = wtx.open_table(HEIGHT_TO_BLOCK_HASH)?;
     let mut height_to_last_sequence_number = wtx.open_table(HEIGHT_TO_LAST_SEQUENCE_NUMBER)?;
     let mut home_inscriptions = wtx.open_table(HOME_INSCRIPTIONS)?;
     let mut inscription_id_to_sequence_number =
@@ -622,7 +622,7 @@ impl<'index> Updater<'_> {
       }
     }
 
-    height_to_block_header.insert(&self.height, &block.header.store())?;
+    height_to_block_hash.insert(&self.height, &block.header.block_hash().store())?;
 
     self.height += 1;
     self.outputs_traversed += outputs_in_block;
