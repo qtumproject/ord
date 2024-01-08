@@ -50,6 +50,14 @@ pub trait Api {
     avoid_reuse: Option<bool>,
   ) -> Result<LoadWalletResult, jsonrpc_core::Error>;
 
+  #[rpc(name = "fundrawtransaction")]
+  fn fund_raw_transaction(
+    &self,
+    tx: String,
+    options: Option<FundRawTransactionOptions>,
+    is_witness: Option<bool>,
+  ) -> Result<FundRawTransactionResult, jsonrpc_core::Error>;
+
   #[rpc(name = "signrawtransactionwithwallet")]
   fn sign_raw_transaction_with_wallet(
     &self,
@@ -108,7 +116,7 @@ pub trait Api {
   #[rpc(name = "getrawchangeaddress")]
   fn get_raw_change_address(
     &self,
-    address_type: Option<bitcoincore_rpc::json::AddressType>,
+    address_type: Option<qtumcore_rpc::json::AddressType>,
   ) -> Result<Address, jsonrpc_core::Error>;
 
   #[rpc(name = "getdescriptorinfo")]
@@ -127,7 +135,7 @@ pub trait Api {
   fn get_new_address(
     &self,
     label: Option<String>,
-    address_type: Option<bitcoincore_rpc::json::AddressType>,
+    address_type: Option<qtumcore_rpc::json::AddressType>,
   ) -> Result<Address, jsonrpc_core::Error>;
 
   #[rpc(name = "listtransactions")]

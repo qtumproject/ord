@@ -8,12 +8,13 @@ homepage = "https://github.com/ordinals/ord"
 repository = "https://github.com/ordinals/ord"
 
 [dependencies]
-bitcoin = { path = "../../rust-qtum/bitcoin", version = "0.30.0-qtum", features = ["serde", "rand"] }
+qtum = { version = "0.30.0-qtum", features = ["serde", "rand"] }
 hex = "0.4.3"
 jsonrpc-core = "18.0.0"
 jsonrpc-derive = "18.0.0"
 jsonrpc-http-server = "18.0.0"
-ord-bitcoincore-rpc = { path = "../../rust-qtumcore-rpc/client", version = "0.17.1-qtum" }
+ord-qtumcore-rpc = "0.17.1-qtum"
 reqwest = { version = "0.11.10", features = ["blocking"] }
 serde = { version = "1.0.137", features = ["derive"] }
 serde_json = { version = "1.0.81" }
+tempfile = "3.2.0"
