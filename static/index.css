@@ -268,3 +268,29 @@ a.mythic {
   height: 1rem;
   width: 1rem;
 }
+
+.top-bar {
+  background-color: black;
+  height: 50px;
+  width: 100%; 
+
+}
+
+.qtum-bar {
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  font-size: 20px;
+  color: blue;
+}
+
+.qtum-bar-content {
+  display: flex;
+  align-items: center;
+}
+
+.qtum-bar-content img {
+  margin-right: 10px;
+}
