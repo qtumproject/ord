@@ -1,7 +1,7 @@
 [package]
 name = "ord"
 description = "◉ Ordinal wallet and block explorer for Qtum"
-version = "0.14.1-qtum"
+version = "0.15.0-qtum"
 license = "CC0-1.0"
 edition = "2021"
 autotests = false
