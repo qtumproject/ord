@@ -86,7 +86,7 @@ mod tests {
         <dl>
           <dt>hash</dt><dd class=monospace>[[:xdigit:]]{64}</dd>
           <dt>target</dt><dd class=monospace>[[:xdigit:]]{64}</dd>
-          <dt>timestamp</dt><dd><time>2009-01-03 18:15:05 UTC</time></dd>
+          <dt>timestamp</dt><dd><time>2017-09-06 10:50:29 UTC</time></dd>
           <dt>size</dt><dd>285</dd>
           <dt>weight</dt><dd>1140</dd>
         </dl>

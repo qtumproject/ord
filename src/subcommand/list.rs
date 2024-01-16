@@ -109,7 +109,7 @@ mod tests {
   #[test]
   fn list_ranges() {
     let outpoint =
-      OutPoint::from_str("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:5")
+      OutPoint::from_str("ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:5")
         .unwrap();
     let ranges = vec![
       (50 * COIN_VALUE, 55 * COIN_VALUE),
@@ -120,7 +120,7 @@ mod tests {
       list(outpoint, ranges),
       vec![
         output(
-          OutPoint::from_str("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:5")
+          OutPoint::from_str("ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:5")
             .unwrap(),
           50 * COIN_VALUE,
           55 * COIN_VALUE,
@@ -130,7 +130,7 @@ mod tests {
           "nvtcsezkbth".to_string()
         ),
         output(
-          OutPoint::from_str("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:5")
+          OutPoint::from_str("ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:5")
             .unwrap(),
           10,
           100,
@@ -140,7 +140,7 @@ mod tests {
           "nvtdijuwxlf".to_string()
         ),
         output(
-          OutPoint::from_str("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:5")
+          OutPoint::from_str("ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:5")
             .unwrap(),
           1050000000000000,
           1150000000000000,
