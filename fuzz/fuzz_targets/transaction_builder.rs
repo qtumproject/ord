@@ -46,7 +46,7 @@ fuzz_target!(|input: Input| {
     );
   }
 
-  let recipient = "bc1pdqrcrxa8vx6gy75mfdfj84puhxffh4fq46h3gkp6jxdd0vjcsdyspfxcv6"
+  let recipient = "qc1p89p24u0pva8sr7a8kf8ljqvr7fs8smqg9hpjusxelr8dh9ke0v7s4h94rf"
     .parse::<Address<NetworkUnchecked>>()
     .unwrap()
     .assume_checked();

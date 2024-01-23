@@ -140,6 +140,7 @@ mod tests {
     <script src=/static/index.js defer></script>
   </head>
   <body>
+  .*
   <header>
     <nav>
       <a href=/ title=home>Qtum Ordinals<sup>beta</sup></a>

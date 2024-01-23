@@ -913,7 +913,7 @@ inscriptions:
       reveal_fee_rate: fee_rate,
       no_limit: false,
       reinscribe: false,
-      postage: Amount::from_sat(10_000),
+      postage: Amount::from_sat(20_000),
       mode,
       ..Default::default()
     }
@@ -1013,7 +1013,7 @@ inscriptions:
       reveal_fee_rate: 4.0.try_into().unwrap(),
       no_limit: false,
       reinscribe: false,
-      postage: Amount::from_sat(10_000),
+      postage: Amount::from_sat(20_000),
       mode: Mode::SharedOutput,
       ..Default::default()
     }
