@@ -1358,9 +1358,9 @@ fn batch_inscribe_fails_if_invalid_network_destination_address() {
 
   CommandBuilder::new("--regtest wallet inscribe --fee-rate 2.1 --batch batch.yaml")
     .write("inscription.txt", "Hello World")
-    .write("batch.yaml", "mode: separate-outputs\ninscriptions:\n- file: inscription.txt\n  destination: bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4")
+    .write("batch.yaml", "mode: separate-outputs\ninscriptions:\n- file: inscription.txt\n  destination: qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv")
     .rpc_server(&rpc_server)
-    .stderr_regex("error: address bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4 belongs to network bitcoin which is different from required regtest\n")
+    .stderr_regex("error: address qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv belongs to network bitcoin which is different from required regtest\n")
     .expected_exit_code(1)
     .run_and_extract_stdout();
 }
@@ -1377,7 +1377,7 @@ fn batch_inscribe_fails_with_shared_output_and_destination_set() {
   CommandBuilder::new("wallet inscribe --fee-rate 2.1 --batch batch.yaml")
     .write("inscription.txt", "Hello World")
     .write("tulip.png", "")
-    .write("batch.yaml", "mode: shared-output\ninscriptions:\n- file: inscription.txt\n  destination: bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n- file: tulip.png")
+    .write("batch.yaml", "mode: shared-output\ninscriptions:\n- file: inscription.txt\n  destination: qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv\n- file: tulip.png")
     .rpc_server(&rpc_server)
     .expected_exit_code(1)
     .stderr_regex("error: individual inscription destinations cannot be set in shared-output mode\n")
@@ -1399,7 +1399,7 @@ fn batch_inscribe_works_with_some_destinations_set_and_others_not() {
     .write("meow.wav", [0; 2048])
     .write(
       "batch.yaml",
-      "mode: separate-outputs\ninscriptions:\n- file: inscription.txt\n  destination: bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n- file: tulip.png\n- file: meow.wav\n  destination: bc1pxwww0ct9ue7e8tdnlmug5m2tamfn7q06sahstg39ys4c9f3340qqxrdu9k\n"
+      "mode: separate-outputs\ninscriptions:\n- file: inscription.txt\n  destination: qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv\n- file: tulip.png\n- file: meow.wav\n  destination: bc1pxwww0ct9ue7e8tdnlmug5m2tamfn7q06sahstg39ys4c9f3340qqxrdu9k\n"
     )
     .rpc_server(&rpc_server)
     .run_and_deserialize_output::<Inscribe>();
@@ -1414,7 +1414,7 @@ fn batch_inscribe_works_with_some_destinations_set_and_others_not() {
     format!("/inscription/{}", output.inscriptions[0].id),
     ".*
   <dt>address</dt>
-  <dd class=monospace>bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4</dd>.*",
+  <dd class=monospace>qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv</dd>.*",
   );
 
   ord_server.assert_response_regex(

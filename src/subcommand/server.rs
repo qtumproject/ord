@@ -2869,7 +2869,7 @@ mod tests {
 
   #[test]
   fn output_with_sat_index() {
-    let txid = "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b";
+    let txid = "ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d";
     TestServer::new_with_sat_index().assert_response_regex(
       format!("/output/{txid}:0"),
       StatusCode::OK,
@@ -2890,7 +2890,7 @@ mod tests {
 
   #[test]
   fn output_without_sat_index() {
-    let txid = "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b";
+    let txid = "ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d";
     TestServer::new().assert_response_regex(
       format!("/output/{txid}:0"),
       StatusCode::OK,
@@ -3091,7 +3091,7 @@ mod tests {
     TestServer::new_with_regtest().assert_response_regex(
       "/",
       StatusCode::OK,
-      ".*<a href=/ title=home>Ordinals<sup>regtest</sup></a>.*",
+      ".*<a href=/ title=home>Qtum Ordinals<sup>regtest</sup></a>.*",
     );
   }
 
@@ -3122,7 +3122,7 @@ mod tests {
     TestServer::new().assert_response_regex(
       "/sat/0",
       StatusCode::OK,
-      ".*<dt>timestamp</dt><dd><time>2009-01-03 18:15:05 UTC</time></dd>.*",
+      ".*<dt>timestamp</dt><dd><time>2017-09-06 10:50:29 UTC</time></dd>.*",
     );
   }
 
@@ -3251,7 +3251,7 @@ mod tests {
       "/rare.txt",
       StatusCode::OK,
       "sat\tsatpoint
-0\t4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:0:0
+0\ted34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:0:0
 ",
     );
   }
@@ -3282,7 +3282,7 @@ mod tests {
     TestServer::new_with_sat_index().assert_response_regex(
       "/sat/0",
       StatusCode::OK,
-      ".*>4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:0:0<.*",
+      ".*>ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:0:0<.*",
     );
   }
 

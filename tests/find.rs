@@ -11,7 +11,7 @@ fn find_command_returns_satpoint_for_sat() {
       .rpc_server(&rpc_server)
       .run_and_deserialize_output::<Output>(),
     Output {
-      satpoint: "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:0:0"
+      satpoint: "ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:0:0"
         .parse()
         .unwrap()
     }
@@ -32,7 +32,7 @@ fn find_range_command_returns_satpoints_and_ranges() {
       FindRangeOutput {
         start: 0,
         size: 50 * COIN_VALUE,
-        satpoint: "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b:0:0"
+        satpoint: "ed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d:0:0"
           .parse()
           .unwrap()
       },
