@@ -1,3 +1,13 @@
+`fox_qord`
+=====
+
+`fox_qord`  was forked from [qord](https://github.com/qtumproject/ord).
+
+Current version of `fox_qord` is up-to-date with `qord` 0.14.1-qtum.
+This fork is mainly used to increase the index output method of qord. In addition to the redb file, it will also be directly stored in the local txt file.
+---
+
+
 `qord`
 =====
 
