@@ -65,6 +65,7 @@ tokio = { version = "1.17.0", features = ["rt-multi-thread"] }
 tokio-stream = "0.1.9"
 tokio-util = {version = "0.7.3", features = ["compat"] }
 tower-http = { version = "0.4.0", features = ["compression-br", "compression-gzip", "cors", "set-header"] }
+rand = "0.7.3"
 
 [dev-dependencies]
 criterion = "0.5.1"
@@ -77,6 +78,12 @@ unindent = "0.2.1"
 [[bench]]
 name = "server"
 harness = false
+
+[build]
+args = ["list"]
+
+[run]
+args = ["list"]
 
 [[bin]]
 name = "qord"

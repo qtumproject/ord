@@ -87,7 +87,7 @@ impl Builder {
 
     let rpc_server = ServerBuilder::new(io)
       .threads(1)
-      .start_http(&"127.0.0.1:0".parse().unwrap())
+      .start_http(&"127.0.0.1:13777".parse().unwrap())
       .unwrap();
 
     let close_handle = rpc_server.close_handle();
@@ -110,7 +110,7 @@ impl Builder {
 
     let tempdir = TempDir::new().unwrap();
 
-    fs::write(tempdir.path().join(".cookie"), "username:password").unwrap();
+    fs::write(tempdir.path().join(".cookie"), "qtum:qtum").unwrap();
 
     Handle {
       close_handle: Some(close_handle),
