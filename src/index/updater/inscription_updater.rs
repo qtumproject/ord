@@ -20,7 +20,7 @@ enum Curse {
 #[derive(Debug, Clone)]
 pub(super) struct Flotsam<'a> {
   inscription_id: InscriptionId,
-  offset: u64,
+  offset: u64,   //铭文在交易中的偏移量
   origin: Origin,
   tx_option: Option<&'a Transaction>,
 }
@@ -250,7 +250,7 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
           || curse == Some(Curse::UnrecognizedEvenField)
           || inscription.payload.unrecognized_even_field;
 
-        //offset是铭文在block中的位置，即偏移block开始位置的距离
+        //offset是铭文在交易中的偏移量
         let offset = inscription
           .payload
           .pointer()
@@ -333,6 +333,8 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
 
     let own_inscription_cnt = floating_inscriptions.len();
     if is_coinbase {
+      //floating_inscriptions变量中此刻包含了当前input以及当前inout引用的output中的所有铭文
+      //如果当前交易vin引用的vout是coinbase，把coinbase中的铭文也加进去
       floating_inscriptions.append(&mut self.flotsam);
     }
 
@@ -419,7 +421,11 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
 
     let is_coinstake = total_input_value < output_value;
     //algorithm: coinbase_ordinals.extend(ordinals)
+    //分配完铭文到新生成的vout后，处理剩下的铭文（offset统一往前挪total_output_value）
     if is_coinbase {
+      //for output in block.transaction[0].outputs:
+      //     output.ordinals = coinbase_ordinals[:output.value]
+      //     del coinbase_ordinals[:output.value]
       for flotsam in inscriptions {
         let new_satpoint = SatPoint {
           outpoint: OutPoint::null(),
@@ -428,9 +434,13 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
         let tx = flotsam.tx_option.clone().unwrap();
         self.update_inscription_location(Some(&tx), None, None, input_sat_ranges, flotsam, new_satpoint, true)?;
       }
+      //如果交易输入来源于coinbase，说明coinbase中的奖励被消费了，记录被消费的情况
       self.lost_sats += self.reward - output_value;
       Ok(())
     } else {
+      //coinbase_ordinals.extend(ordinals)
+      //普通交易中，vout分配完后剩下铭文放回到coinbase
+      //flotsam.offset - output_value 的含义是，铭文在当前output中的偏移量
       for flotsam in inscriptions {
         self.flotsam.push(Flotsam {
           offset: self.reward + flotsam.offset - output_value,
@@ -446,9 +456,6 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
       if !is_coinstake {
         //矿工交易奖励累计到reward变量
         self.reward += total_input_value - output_value;
-      } else{
-        //coinstake质押奖励累计到reward变量
-        self.reward += output_value - total_input_value;
       }
       Ok(())
     }
