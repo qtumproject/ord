@@ -331,9 +331,9 @@ impl<'index> Updater<'_> {
         Chain::Signet => String::from("signet/"),
         Chain::Regtest => String::from("regtest/"),
       };
-      *log_file = Some(File::options().append(true).open("/Users/wangzuo/.qord/regtest/log_file_index.txt").unwrap());
+      // *log_file = Some(File::options().append(true).open("/Users/wangzuo/.qord/regtest/log_file_index.txt").unwrap());
 
-      // *log_file = Some(File::options().append(true).open(format!("{chain_folder}log_file_index.txt")).unwrap());
+      *log_file = Some(File::options().append(true).open(format!("{chain_folder}log_file_index.txt")).unwrap());
     }
     println!("cmd;{0};new_block;{1}", self.height, &block.header.block_hash());
     writeln!(log_file.as_ref().unwrap(), "cmd;{0};new_block;{1}", self.height, &block.header.block_hash())?;
