@@ -444,6 +444,10 @@ impl<'index> Updater<'_> {
 
     let home_inscription_count = home_inscriptions.len()?;
 
+    let mut reward = Height(self.height).subsidy();
+    if self.height > 5000{
+      reward = Height(self.height).block_stake_reward();
+    }
     let mut inscription_updater = InscriptionUpdater {
       blessed_inscription_count,
       chain: self.index.options.chain(),
@@ -459,7 +463,7 @@ impl<'index> Updater<'_> {
       lost_sats,
       next_sequence_number,
       outpoint_to_value: &mut outpoint_to_value,
-      reward: Height(self.height).subsidy(),
+      reward: reward,
       sat_to_sequence_number: &mut sat_to_sequence_number,
       satpoint_to_sequence_number: &mut satpoint_to_sequence_number,
       sequence_number_to_children: &mut sequence_number_to_children,
@@ -565,7 +569,13 @@ impl<'index> Updater<'_> {
         outpoint_to_sat_ranges.insert(&OutPoint::null().store(), lost_sat_ranges.as_slice())?;
       }
     } else */ if index_inscriptions {
-      for (tx, txid) in block.txdata.iter().skip(1).chain(block.txdata.first()) {
+      //qtum do not need to handle coinbase tx, just need handle stake tx as handle coinbase tx in btc
+      let mut iter = block.txdata.iter().skip(1).chain(block.txdata.first());
+      //qtum height <= 5000 not have stake tx
+      if self.height > 5000{
+        iter = block.txdata.iter().skip(2).chain(block.txdata.get(1));
+      }
+      for (tx, txid) in iter {
         inscription_updater.index_envelopes(tx, *txid, None)?;
       }
       inscription_updater.end_block()?;

@@ -102,7 +102,6 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
     for (input_index, tx_in) in tx.input.iter().enumerate() {
       // skip subsidy since no inscriptions possible
       if tx_in.previous_output.is_null() {
-        //coinbase_tx_in（qtum 链中 coinbase tx只有一个tx_in）
         total_input_value += Height(self.height).subsidy();
         continue;
       }
@@ -250,7 +249,9 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
           || curse == Some(Curse::UnrecognizedEvenField)
           || inscription.payload.unrecognized_even_field;
 
-        //offset是铭文在交易中的偏移量
+        //offset是铭文占据的金额
+        //如果pointer > total_output_value说明该铭文不会被分配到当前tx的output中，设置offset为当前input的起始位置
+        //可以看出同一个input不能mint两个超出当前tx out范围的铭文，不然就重复铭刻到当前input的起始位置了，猜测这是mint给了矿工
         let offset = inscription
           .payload
           .pointer()
@@ -300,6 +301,7 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
       .map(|flotsam| flotsam.inscription_id)
       .collect::<HashSet<InscriptionId>>();
 
+    //一个铭文的parent一定要么在当前交易的input中，要么在output中
     for flotsam in &mut floating_inscriptions {
       if let Flotsam {
         origin: Origin::New { parent, .. },
@@ -330,11 +332,10 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
       .first()
       .map(|tx_in| tx_in.previous_output.is_null())
       .unwrap_or_default();
+    let is_coinstake = total_input_value < total_output_value;
 
     let own_inscription_cnt = floating_inscriptions.len();
-    if is_coinbase {
-      //floating_inscriptions变量中此刻包含了当前input以及当前inout引用的output中的所有铭文
-      //如果当前交易vin引用的vout是coinbase，把coinbase中的铭文也加进去
+    if is_coinbase || is_coinstake {
       floating_inscriptions.append(&mut self.flotsam);
     }
 
@@ -359,7 +360,7 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
           break;
         }
 
-        let sent_to_coinbase = inscription_idx >= own_inscription_cnt;
+        let sent_to_coinstake = inscription_idx >= own_inscription_cnt;
         inscription_idx += 1;
         let new_satpoint = SatPoint {
           outpoint: OutPoint {
@@ -369,7 +370,7 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
           offset: flotsam.offset - output_value,
         };
 
-        new_locations.push((new_satpoint, sent_to_coinbase, tx_out, inscriptions.next().unwrap()));
+        new_locations.push((new_satpoint, sent_to_coinstake, tx_out, inscriptions.next().unwrap()));
       }
 
       range_to_vout.insert((output_value, end), vout.try_into().unwrap());
@@ -385,7 +386,7 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
       );
     }
 
-    for (new_satpoint, sent_to_coinbase, tx_out, mut flotsam) in new_locations.into_iter() {
+    for (new_satpoint, sent_to_coinstake, tx_out, mut flotsam) in new_locations.into_iter() {
       let new_satpoint = match flotsam.origin {
         Origin::New {
           pointer: Some(pointer),
@@ -415,17 +416,11 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
         input_sat_ranges,
         flotsam,
         new_satpoint,
-        sent_to_coinbase,
+        sent_to_coinstake,
       )?;
     }
 
-    let is_coinstake = total_input_value < output_value;
-    //algorithm: coinbase_ordinals.extend(ordinals)
-    //分配完铭文到新生成的vout后，处理剩下的铭文（offset统一往前挪total_output_value）
-    if is_coinbase {
-      //for output in block.transaction[0].outputs:
-      //     output.ordinals = coinbase_ordinals[:output.value]
-      //     del coinbase_ordinals[:output.value]
+    if is_coinbase || is_coinstake {
       for flotsam in inscriptions {
         let new_satpoint = SatPoint {
           outpoint: OutPoint::null(),
@@ -434,13 +429,11 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
         let tx = flotsam.tx_option.clone().unwrap();
         self.update_inscription_location(Some(&tx), None, None, input_sat_ranges, flotsam, new_satpoint, true)?;
       }
-      //如果交易输入来源于coinbase，说明coinbase中的奖励被消费了，记录被消费的情况
-      self.lost_sats += self.reward - output_value;
+      if is_coinbase{
+        self.lost_sats += self.reward - output_value;
+      }
       Ok(())
-    } else {
-      //coinbase_ordinals.extend(ordinals)
-      //普通交易中，vout分配完后剩下铭文放回到coinbase
-      //flotsam.offset - output_value 的含义是，铭文在当前output中的偏移量
+    } else{
       for flotsam in inscriptions {
         self.flotsam.push(Flotsam {
           offset: self.reward + flotsam.offset - output_value,
@@ -451,12 +444,7 @@ impl<'a, 'db, 'tx> InscriptionUpdater<'a, 'db, 'tx> {
         self.write_to_file(format!("cmd;{0};insert;early_transfer_sent_as_fee;{1}", self.height, flotsam.inscription_id), true)?;
       }
       println!("{}", String::from(txid.to_string()));
-      //coin_stake交易
-
-      if !is_coinstake {
-        //矿工交易奖励累计到reward变量
-        self.reward += total_input_value - output_value;
-      }
+      self.reward += total_input_value - output_value;
       Ok(())
     }
   }
