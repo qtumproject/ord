@@ -128,7 +128,7 @@ mod tests {
         <dl>
           .*
           <dt>address</dt>
-          <dd class=monospace>bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4</dd>
+          <dd class=monospace>qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv</dd>
           <dt>output value</dt>
           <dd>1</dd>
           .*

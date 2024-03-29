@@ -69,7 +69,7 @@ pub(crate) fn satpoint(n: u64, offset: u64) -> SatPoint {
 }
 
 pub(crate) fn address() -> Address {
-  "qc1p6p8u0j2z4p339suwg5dygkfxjxft5nkuxrmh23s39rvavlwsmhpqx4fc0w"
+  "qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv"
     .parse::<Address<NetworkUnchecked>>()
     .unwrap()
     .assume_checked()

@@ -120,17 +120,17 @@ mod tests {
       ]),
     );
     case(
-      "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
+      "qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv",
       Object::Address(
-        "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4"
+        "qc1qq37jr27g4037wdfqtad2t9hfd6m2d5w6fka3uv"
           .parse()
           .unwrap(),
       ),
     );
     case(
-      "BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4",
+      "QC1QQ37JR27G4037WDFQTAD2T9HFD6M2D5W6FKA3UV",
       Object::Address(
-        "BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4"
+        "QC1QQ37JR27G4037WDFQTAD2T9HFD6M2D5W6FKA3UV"
           .parse()
           .unwrap(),
       ),
