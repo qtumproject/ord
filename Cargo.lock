@@ -2500,6 +2500,7 @@ dependencies = [
  "pretty_assertions",
  "pulldown-cmark",
  "qtum",
+ "rand 0.7.3",
  "redb",
  "regex",
  "reqwest",

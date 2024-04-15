@@ -12,6 +12,17 @@ impl Height {
     Epoch::from(self).subsidy()
   }
 
+  pub(crate) fn block_stake_reward(self) -> u64 {
+    if self.0 <= 5000 {
+      return 200000000;
+    }
+    let halvings = (self.0 - 5001) / 985500;
+    if halvings == 7 {
+      return 0;
+    }
+    return 400000000 >> halvings;
+  }
+
   pub(crate) fn starting_sat(self) -> Sat {
     let epoch = Epoch::from(self);
     let epoch_starting_sat = epoch.starting_sat();

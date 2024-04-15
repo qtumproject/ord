@@ -18,10 +18,10 @@ impl ContextBuilder {
 
     let tempdir = self.tempdir.unwrap_or_else(|| TempDir::new().unwrap());
     let cookie_file = tempdir.path().join("cookie");
-    fs::write(&cookie_file, "username:password").unwrap();
+    fs::write(&cookie_file, "qtum:qtum").unwrap();
 
     let command: Vec<OsString> = vec![
-      "ord".into(),
+      "qord".into(),
       "--rpc-url".into(),
       rpc_server.url().into(),
       "--data-dir".into(),

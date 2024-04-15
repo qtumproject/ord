@@ -1705,7 +1705,7 @@ mod tests {
 
       let cookiefile = tempdir.path().join("cookie");
 
-      fs::write(&cookiefile, "username:password").unwrap();
+      fs::write(&cookiefile, "qtum:qtum").unwrap();
 
       let port = TcpListener::bind("127.0.0.1:0")
         .unwrap()

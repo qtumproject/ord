@@ -186,6 +186,8 @@ pub(crate) struct InscriptionEntry {
   pub(crate) sat: Option<Sat>,
   pub(crate) sequence_number: u32,
   pub(crate) timestamp: u32,
+  pub(crate) is_json_or_text: bool,
+  pub(crate) is_cursed_for_brc20: bool,
 }
 
 pub(crate) type InscriptionEntryValue = (
@@ -198,6 +200,8 @@ pub(crate) type InscriptionEntryValue = (
   Option<u64>,        // sat
   u32,                // sequence number
   u32,                // timestamp
+  i8,                 // is_json_or_text
+  i8,                 // is_cursed_for_brc20
 );
 
 impl Entry for InscriptionEntry {
@@ -215,6 +219,8 @@ impl Entry for InscriptionEntry {
       sat,
       sequence_number,
       timestamp,
+      is_json_or_text,
+      is_cursed_for_brc20,
     ): InscriptionEntryValue,
   ) -> Self {
     Self {
@@ -227,6 +233,8 @@ impl Entry for InscriptionEntry {
       sat: sat.map(Sat),
       sequence_number,
       timestamp,
+      is_json_or_text: is_json_or_text != 0,
+      is_cursed_for_brc20: is_cursed_for_brc20 != 0,
     }
   }
 
@@ -241,6 +249,8 @@ impl Entry for InscriptionEntry {
       self.sat.map(Sat::n),
       self.sequence_number,
       self.timestamp,
+      if self.is_json_or_text { 1 } else { 0 },
+      if self.is_cursed_for_brc20 { 1 } else { 0 },
     )
   }
 }
@@ -383,8 +393,8 @@ mod tests {
   #[test]
   fn inscription_id_entry() {
     let inscription_id = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdefi0"
-      .parse::<InscriptionId>()
-      .unwrap();
+        .parse::<InscriptionId>()
+        .unwrap();
 
     assert_eq!(
       inscription_id.store(),
@@ -408,16 +418,16 @@ mod tests {
   #[test]
   fn parent_entry_index() {
     let inscription_id = "0000000000000000000000000000000000000000000000000000000000000000i1"
-      .parse::<InscriptionId>()
-      .unwrap();
+        .parse::<InscriptionId>()
+        .unwrap();
 
     assert_eq!(inscription_id.store(), (0, 0, 1));
 
     assert_eq!(InscriptionId::load((0, 0, 1)), inscription_id);
 
     let inscription_id = "0000000000000000000000000000000000000000000000000000000000000000i256"
-      .parse::<InscriptionId>()
-      .unwrap();
+        .parse::<InscriptionId>()
+        .unwrap();
 
     assert_eq!(inscription_id.store(), (0, 0, 256));
 

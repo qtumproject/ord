@@ -59,7 +59,7 @@ fn index_runs_with_rpc_user_and_pass_as_env_vars() {
 
   let tempdir = TempDir::new().unwrap();
 
-  let ord = Command::new(executable_path("ord"))
+  let ord = Command::new(executable_path("qord"))
     .args(
       format!(
         "--rpc-url {} --bitcoin-data-dir {} --data-dir {} index update",

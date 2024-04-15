@@ -3,7 +3,7 @@ use super::*;
 #[derive(Debug, PartialEq, Copy, Clone, Eq, PartialOrd, Ord, Default)]
 pub struct SatPoint {
   pub outpoint: OutPoint,
-  pub offset: u64,
+  pub offset: u64, //在outpoint中的偏移量
 }
 
 impl Display for SatPoint {
